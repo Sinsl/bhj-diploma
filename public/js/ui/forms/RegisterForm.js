@@ -15,12 +15,14 @@ class RegisterForm extends AsyncForm {
         this.element.reset();
         App.setState( 'user-logged' );
         const modalID = this.element.closest('.modal').dataset.modalId;
-        const modal = new Modal(App.getModal(modalID));
+        const modal = App.getModal(modalID);
         modal.close();
 
         
       }
-      if (err) console.error('Ошибка регистрации', err);
+      if (err) {
+        console.error('Ошибка регистрации', err);
+      }
     });
   }
 }

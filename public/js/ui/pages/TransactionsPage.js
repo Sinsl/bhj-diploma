@@ -62,12 +62,14 @@ class TransactionsPage {
    * */
   removeAccount() {
     if(this.lastOptions) {
-      if( confirm("Вы действительно хотите удалить счёт?")) {
+      if (confirm("Вы действительно хотите удалить счёт?")) {
         let formData = new FormData();
         formData.append('id', this.lastOptions.account_id);
 
         Account.remove(formData, (err, response) => {
-          if (err) console.error('Ошибка удаления счета', err);
+          if (err) {
+            console.error('Ошибка удаления счета', err);
+          }
           if (response.success === true) {
             App.updateWidgets();
             App.updateForms();
@@ -88,7 +90,9 @@ class TransactionsPage {
       let formData = new FormData();
       formData.append('id', id);
       Transaction.remove(formData, (err, response) => {
-        if (err) console.error('Ошибка удаления транзакции', err);
+        if (err) {
+          console.error('Ошибка удаления транзакции', err);
+        }
         if (response.success === true) {
           this.update();
           App.update();
@@ -107,13 +111,17 @@ class TransactionsPage {
     if (options) {
       this.lastOptions = options;
       Account.get(options.account_id, (err, response) => {
-        if (err) console.error('Ошибка получения счета', err);
+        if (err) {
+          console.error('Ошибка получения счета', err);
+        }
         if (response.success === true) {
           this.renderTitle(response.data.name);
         }
       });
       Transaction.list( options, (err, response) => {
-        if (err) console.error('Ошибка получения транзакции', err);
+        if (err) {
+          console.error('Ошибка получения транзакции', err);
+        }
         this.renderTransactions(response.data);
       });
     }
@@ -184,7 +192,7 @@ class TransactionsPage {
     divSum.insertAdjacentHTML('beforeend', `${item.sum} <span class="currency">₽</span>`);
     divParentSum.appendChild(divSum);
 
-    divDetails.appendChild(divParentSum);
+    divTransaction.appendChild(divParentSum);
 
     const divControls = document.createElement('div');
     divControls.classList.add('col-md-2', 'transaction__controls');
@@ -194,7 +202,7 @@ class TransactionsPage {
       </button>`
     );
 
-    divDetails.appendChild(divControls);
+    divTransaction.appendChild(divControls);
 
     return divTransaction;
   }

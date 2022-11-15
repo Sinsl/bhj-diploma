@@ -12,15 +12,12 @@ const createRequest = (options) => {
     xhr.open( method, url );
     xhr.responseType = 'json';
     xhr.send(data);
-
-    xhr.addEventListener('load', () => {
-      callback(null, xhr.response);
-    });
   }
   catch ( e ) {
-    xhr.addEventListener('error', (e) => {
-      console.log(`ОШИБКА createRequest: ${e}`);
-      callback(e);
-    });
+    console.log(`ОШИБКА createRequest: ${e}`);
   }
+  
+  xhr.addEventListener('load', () => {
+    callback(null, xhr.response);
+  });
 };

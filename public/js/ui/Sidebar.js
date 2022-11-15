@@ -38,20 +38,22 @@ class Sidebar {
     const btnRegister = document.querySelector('.menu-item_register');
     btnRegister.addEventListener('click', (e) => {
       e.preventDefault();
-      const modal = new Modal(App.getModal('register'));
+      const modal = App.getModal('register');
       modal.open();
     })
     const btnLogin = document.querySelector('.menu-item_login');
     btnLogin.addEventListener('click', (e) => {
       e.preventDefault();
-      const modal = new Modal(App.getModal('login'));
+      const modal = App.getModal('login');
       modal.open();
     })   
     const btnLogout = document.querySelector('.menu-item_logout');
     btnLogout.addEventListener('click', (e) => {
       e.preventDefault();
       User.logout((err, response) => {
-        if (err) console.error(`Error logout: ${err}`);
+        if (err) {
+          console.error(`Error logout: ${err}`);
+        }
         if (response.success === true) {
           App.setState( 'init' );
         }

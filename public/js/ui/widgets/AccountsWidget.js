@@ -31,7 +31,7 @@ class AccountsWidget {
   registerEvents() {
     this.element.addEventListener('click', (e) => {
       if (e.target.classList.contains('create-account')) {
-        const modal = new Modal(App.getModal('createAccount'));
+        const modal = App.getModal('createAccount');
         modal.open();
       } else {
         const elemLi = e.target.closest('.account');
@@ -54,9 +54,11 @@ class AccountsWidget {
    * */
   update() {
     const user = User.current();
-    if (user !== undefined) {
+    if (user) {
       Account.list(user, (err, response) => {
-        if (err) console.error('Ошибка получения списка счетов', err);
+        if (err) {
+          console.error('Ошибка получения списка счетов', err);
+        }
         if (response) {
           this.clear();
           const list = response.data;
@@ -72,7 +74,7 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    const list = Array.from(document.querySelectorAll('li.account'));
+    const list = Array.from(this.element.querySelectorAll('li.account'));
     list.forEach(item => item.remove());
   }
 
@@ -84,7 +86,7 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount( element ) {
-    const list = Array.from(document.querySelectorAll('li.account'));
+    const list = Array.from(this.element.querySelectorAll('li.account'));
     list.forEach(item => {
       if (item.classList.contains('active') === true) {
         item.classList.remove('active');
@@ -120,7 +122,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-    const widget = document.querySelector('ul.accounts-panel');
-    widget.appendChild(this.getAccountHTML(data));
+    this.element.appendChild(this.getAccountHTML(data));
   }
 }

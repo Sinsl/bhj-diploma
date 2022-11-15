@@ -12,7 +12,9 @@ class Entity {
    * */
   static list(data, callback){
     let urlValue = this.URL;
-    if (urlValue === '/transaction') urlValue += `?account_id=${data.account_id}`;
+    if (urlValue === '/transaction') {
+      urlValue += `?account_id=${data.account_id}`;
+    }
     createRequest({
       url: urlValue,
       method: 'GET',

@@ -27,7 +27,7 @@ class UserWidget {
    * */
   update(){
     const user = User.current();
-    const elemName = document.querySelector('.user-name');
+    const elemName = this.element.querySelector('.user-name');
     elemName.textContent = user.name;
   }
 }

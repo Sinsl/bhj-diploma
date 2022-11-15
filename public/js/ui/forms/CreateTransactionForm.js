@@ -18,9 +18,11 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     const user = User.current();
-    if (user !== undefined) {
+    if (user) {
       Account.list(user, (err, response) => {
-        if (err) console.error('Ошибка получения списка счетов', err);
+        if (err){
+          console.error('Ошибка получения списка счетов', err);
+        }
         if (response) {
           const select = this.element.querySelector('select.accounts-select');
           this.clearSelect(select);
@@ -53,10 +55,12 @@ class CreateTransactionForm extends AsyncForm {
         this.element.reset();
         App.update();
         const modalID = this.element.closest('.modal').dataset.modalId;
-        const modal = new Modal(App.getModal(modalID));
+        const modal = App.getModal(modalID);
         modal.close();
       }
-      if (err) console.error('Ошибка создания транзакции', err);
+      if (err) {
+        console.error('Ошибка создания транзакции', err);
+      }
     });
   }
 }
